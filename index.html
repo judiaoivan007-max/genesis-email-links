@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Genesis — Email Reference</title>
+  <title>Genesis — Referência de Email</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline';">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -230,32 +231,32 @@
     <div class="header">
       <div class="header-icon">G</div>
       <div>
-        <div class="header-text">Genesis Task Tracker</div>
-        <div class="header-sub">Email Reference</div>
+        <div class="header-text">Genesis Lda — Gestão de Tarefas</div>
+        <div class="header-sub">Referência de Email</div>
       </div>
     </div>
 
     <!-- Error state -->
     <div id="error" class="error-msg hidden">
-      No search query provided. Check the link format.
+      Nenhum termo de pesquisa fornecido. Verifique o formato do link.
     </div>
 
     <!-- Main content (hidden until JS populates) -->
     <div id="main" class="body hidden">
 
       <!-- Subject always visible -->
-      <div class="subject-label">Email Subject</div>
-      <div class="subject-box" id="subject-box" title="Click to copy" onclick="copyQuery()"></div>
+      <div class="subject-label">Assunto do Email</div>
+      <div class="subject-box" id="subject-box" title="Copiar para a área de transferência" onclick="copyQuery()"></div>
 
       <!-- Mobile: copy + instructions (no auto-redirect) -->
       <div id="mobile-section" class="hidden">
         <button class="copy-btn" id="copy-btn" onclick="copyQuery()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          <span id="copy-btn-text">Copy to clipboard</span>
+          <span id="copy-btn-text">Copiar para a área de transferência</span>
         </button>
 
         <div class="instructions" id="instructions">
-          <div class="instructions-title" id="instructions-title">How to find this email:</div>
+          <div class="instructions-title" id="instructions-title">Como encontrar este email:</div>
           <ol id="instructions-list">
             <!-- Populated by JS -->
           </ol>
@@ -263,7 +264,7 @@
 
         <a id="try-open-link" class="secondary-link" href="#" target="_blank">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          <span id="try-open-text">Try opening in browser</span>
+          <span id="try-open-text">Tentar abrir no navegador</span>
         </a>
       </div>
 
@@ -271,20 +272,20 @@
       <div id="desktop-section" class="hidden">
         <div class="redirect-section" id="redirect-spinner">
           <div class="spinner"></div>
-          <div class="redirect-text">Redirecting to your email...</div>
+          <div class="redirect-text">A redirecionar...</div>
         </div>
 
         <!-- Fallback shown after timeout -->
         <div id="desktop-fallback" class="hidden">
           <button class="copy-btn" id="desktop-copy-btn" onclick="copyQuery()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-            <span id="desktop-copy-text">Copy subject to search manually</span>
+            <span id="desktop-copy-text">Copiar assunto para pesquisa manual</span>
           </button>
 
           <div style="text-align:center;">
             <a id="desktop-open-link" class="secondary-link" href="#" target="_blank">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span id="desktop-open-text">Open email search</span>
+              <span id="desktop-open-text">Abrir pesquisa de email</span>
             </a>
           </div>
         </div>
@@ -292,7 +293,7 @@
 
     </div>
 
-    <div class="footer">Genesis Lda &mdash; Task Tracker</div>
+    <div class="footer">Genesis Lda &mdash; Gestão de Tarefas</div>
   </div>
 
   <script>
@@ -347,29 +348,22 @@
       window._redirectQuery = q;
       window._appName = appName;
 
-      // --- AUTO-COPY ON LOAD (both mobile and desktop) ---
-      // This is the key UX: click link in email → page opens → subject auto-copied → user just pastes
-      setTimeout(function () { copyQuery(); }, 300);
-
       if (isMobile) {
         // --- MOBILE PATH ---
         document.getElementById('mobile-section').classList.remove('hidden');
 
-        // Set instructions based on provider
+        // Set instructions — user must tap copy button first
         var listEl = document.getElementById('instructions-list');
-        var shortcut = to === 'outlook' ? 'Ctrl+E' : 'the search bar';
+        var searchTarget = to === 'outlook' ? 'Ctrl+E' : 'a barra de pesquisa';
         listEl.innerHTML =
-          '<li><strong>Copied!</strong> The subject is now in your clipboard</li>' +
-          '<li>Open the <strong>' + appName + '</strong> app</li>' +
-          '<li>Tap ' + shortcut + ' and <strong>paste</strong> (long-press → Paste)</li>';
-
-        // Update instructions title
-        document.getElementById('instructions-title').textContent = 'Subject copied! Now:';
+          '<li>Toque no botão acima para copiar</li>' +
+          '<li>Abra o aplicativo <strong>' + appName + '</strong></li>' +
+          '<li>Toque na barra de pesquisa e <strong>cole</strong> (pressione longamente → Colar)</li>';
 
         // Secondary "try opening" link
         var tryLink = document.getElementById('try-open-link');
         tryLink.href = searchUrl;
-        document.getElementById('try-open-text').textContent = openLabel + ' in browser';
+        document.getElementById('try-open-text').textContent = 'Tentar abrir ' + appName + ' no navegador';
 
       } else {
         // --- DESKTOP PATH ---
@@ -379,10 +373,9 @@
         var desktopLink = document.getElementById('desktop-open-link');
         desktopLink.href = searchUrl;
         var shortcutKey = to === 'outlook' ? 'Ctrl+E' : 'Ctrl+/';
-        document.getElementById('desktop-open-text').textContent = 'Open ' + appName + ' (' + shortcutKey + ' to search)';
+        document.getElementById('desktop-open-text').textContent = 'Abrir ' + appName + ' (' + shortcutKey + ' para pesquisar)';
 
-        // NO auto-redirect — just show the copied confirmation + manual open link
-        // Auto-redirect was breaking because users weren't logged in
+        // Show fallback copy section after brief delay (no auto-redirect)
         setTimeout(function () {
           document.getElementById('redirect-spinner').classList.add('hidden');
           document.getElementById('desktop-fallback').classList.remove('hidden');
@@ -405,9 +398,12 @@
         allCopyBtns.forEach(function (item) {
           if (item.btn) {
             item.btn.classList.add('copied');
-            if (item.text) item.text.textContent = 'Copied!';
+            if (item.text) item.text.textContent = 'Copiado!';
           }
         });
+        // Update mobile instructions after successful copy
+        var instructionsTitle = document.getElementById('instructions-title');
+        if (instructionsTitle) instructionsTitle.textContent = 'Assunto copiado! Agora:';
         setTimeout(function () {
           subjectBox.classList.remove('copied-flash');
           allCopyBtns.forEach(function (item) {
@@ -415,24 +411,31 @@
               item.btn.classList.remove('copied');
               if (item.text) {
                 item.text.textContent = item.btn.id === 'copy-btn'
-                  ? 'Copy to clipboard'
-                  : 'Copy subject to search manually';
+                  ? 'Copiar para a área de transferência'
+                  : 'Copiar assunto para pesquisa manual';
               }
             }
           });
+          if (instructionsTitle) instructionsTitle.textContent = 'Como encontrar este email:';
         }, 2000);
+      }
+
+      function showCopyFailed() {
+        allCopyBtns.forEach(function (item) {
+          if (item.text) item.text.textContent = 'Selecione o texto acima e copie manualmente (pressione longamente)';
+        });
       }
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(q).then(showSuccess).catch(function () {
-          fallbackCopy(q, showSuccess);
+          fallbackCopy(q, showSuccess, showCopyFailed);
         });
       } else {
-        fallbackCopy(q, showSuccess);
+        fallbackCopy(q, showSuccess, showCopyFailed);
       }
     }
 
-    function fallbackCopy(text, onSuccess) {
+    function fallbackCopy(text, onSuccess, onFailure) {
       var ta = document.createElement('textarea');
       ta.value = text;
       ta.style.position = 'fixed';
@@ -441,13 +444,18 @@
       document.body.appendChild(ta);
       ta.focus();
       ta.select();
+      var success = false;
       try {
-        document.execCommand('copy');
-        if (onSuccess) onSuccess();
+        success = document.execCommand('copy');
       } catch (e) {
-        // Silent fail
+        success = false;
       }
       document.body.removeChild(ta);
+      if (success && onSuccess) {
+        onSuccess();
+      } else if (!success && onFailure) {
+        onFailure();
+      }
     }
   </script>
 </body>
