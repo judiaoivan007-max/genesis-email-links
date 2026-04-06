@@ -347,23 +347,24 @@
       window._redirectQuery = q;
       window._appName = appName;
 
+      // --- AUTO-COPY ON LOAD (both mobile and desktop) ---
+      // This is the key UX: click link in email → page opens → subject auto-copied → user just pastes
+      setTimeout(function () { copyQuery(); }, 300);
+
       if (isMobile) {
         // --- MOBILE PATH ---
         document.getElementById('mobile-section').classList.remove('hidden');
 
         // Set instructions based on provider
         var listEl = document.getElementById('instructions-list');
-        if (to === 'outlook') {
-          listEl.innerHTML =
-            '<li>Open the <strong>Outlook</strong> app on your phone</li>' +
-            '<li>Tap the <strong>search</strong> icon</li>' +
-            '<li>Paste the subject text and search</li>';
-        } else {
-          listEl.innerHTML =
-            '<li>Open the <strong>Gmail</strong> app on your phone</li>' +
-            '<li>Tap the <strong>search bar</strong> at the top</li>' +
-            '<li>Paste the subject text and search</li>';
-        }
+        var shortcut = to === 'outlook' ? 'Ctrl+E' : 'the search bar';
+        listEl.innerHTML =
+          '<li><strong>Copied!</strong> The subject is now in your clipboard</li>' +
+          '<li>Open the <strong>' + appName + '</strong> app</li>' +
+          '<li>Tap ' + shortcut + ' and <strong>paste</strong> (long-press → Paste)</li>';
+
+        // Update instructions title
+        document.getElementById('instructions-title').textContent = 'Subject copied! Now:';
 
         // Secondary "try opening" link
         var tryLink = document.getElementById('try-open-link');
@@ -377,18 +378,15 @@
         // Set up desktop links
         var desktopLink = document.getElementById('desktop-open-link');
         desktopLink.href = searchUrl;
-        document.getElementById('desktop-open-text').textContent = 'Open ' + appName + ' search';
+        var shortcutKey = to === 'outlook' ? 'Ctrl+E' : 'Ctrl+/';
+        document.getElementById('desktop-open-text').textContent = 'Open ' + appName + ' (' + shortcutKey + ' to search)';
 
-        // Auto-redirect after 600ms
-        var redirectTimer = setTimeout(function () {
-          window.location.href = searchUrl;
-        }, 600);
-
-        // Show fallback after 1.5s
+        // NO auto-redirect — just show the copied confirmation + manual open link
+        // Auto-redirect was breaking because users weren't logged in
         setTimeout(function () {
           document.getElementById('redirect-spinner').classList.add('hidden');
           document.getElementById('desktop-fallback').classList.remove('hidden');
-        }, 1500);
+        }, 500);
       }
     })();
 
