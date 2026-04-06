@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Genesis — Redirecting to email...</title>
+  <title>Genesis — Email Reference</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f8f9fa;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f0f2f5;
       color: #333;
       display: flex;
       align-items: center;
@@ -18,124 +18,281 @@
     }
     .card {
       background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      max-width: 480px;
+      border-radius: 12px;
+      max-width: 520px;
       width: 100%;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
     }
     .header {
-      background: #1a365d;
+      background: linear-gradient(135deg, #1a365d 0%, #2d5aa0 100%);
       color: #fff;
-      padding: 16px 20px;
-      font-size: 16px;
-      font-weight: bold;
-      letter-spacing: 0.5px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .body {
-      padding: 24px 20px;
+    .header-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .header-text {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .header-sub {
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    /* Main content */
+    .body { padding: 28px 24px; }
+
+    /* Subject display */
+    .subject-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .subject-box {
+      background: #f8f9fb;
+      border: 2px solid #e2e6ed;
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #1a365d;
+      word-break: break-word;
+      line-height: 1.45;
+      margin-bottom: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: all;
+      -webkit-user-select: all;
+    }
+    .subject-box:hover { border-color: #2d5aa0; background: #f0f4fa; }
+    .subject-box.copied-flash {
+      border-color: #27ae60;
+      background: #f0faf4;
+    }
+
+    /* Copy button */
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #2d5aa0;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      width: 100%;
+      justify-content: center;
+    }
+    .copy-btn:hover { background: #1a365d; }
+    .copy-btn:active { transform: scale(0.98); }
+    .copy-btn.copied {
+      background: #27ae60;
+    }
+    .copy-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* Instructions */
+    .instructions {
+      margin-top: 20px;
+      padding: 16px 18px;
+      background: #f8f9fb;
+      border-radius: 8px;
+      border-left: 3px solid #2d5aa0;
+    }
+    .instructions-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a365d;
+      margin-bottom: 10px;
+    }
+    .instructions ol {
+      list-style: none;
+      counter-reset: steps;
+      padding: 0;
+    }
+    .instructions li {
+      counter-increment: steps;
+      font-size: 14px;
+      color: #555;
+      padding: 4px 0 4px 32px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .instructions li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      background: #2d5aa0;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 4px;
+    }
+
+    /* Secondary link */
+    .secondary-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      color: #2d5aa0;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .secondary-link:hover { color: #1a365d; text-decoration: underline; }
+    .secondary-link svg { width: 16px; height: 16px; }
+
+    /* Redirect spinner (desktop) */
+    .redirect-section {
       text-align: center;
+      padding-bottom: 8px;
     }
     .spinner {
       display: inline-block;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border: 3px solid #e0e0e0;
       border-top-color: #2d5aa0;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .status {
+    .redirect-text {
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: #e8eaed;
+      margin: 20px 0;
+    }
+
+    /* Error */
+    .error-msg {
+      color: #c0392b;
       font-size: 15px;
-      color: #333;
-      margin-bottom: 8px;
-    }
-    .query-display {
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 20px;
-      word-break: break-word;
-    }
-    .query-display code {
-      background: #f0f0f0;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-size: 12px;
-    }
-    .link-fallback {
-      display: inline-block;
-      background: #2d5aa0;
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 24px;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 12px;
-      transition: background 0.2s;
-    }
-    .link-fallback:hover { background: #1a365d; }
-    .copy-btn {
-      display: inline-block;
-      background: #f8f9fa;
-      color: #666;
-      border: 1px solid #e0e0e0;
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .copy-btn:hover { background: #e8e8e8; }
-    .copy-btn.copied { background: #27ae60; color: #fff; border-color: #27ae60; }
-    .error {
-      color: #e74c3c;
-      font-size: 14px;
-      padding: 24px 20px;
       text-align: center;
+      padding: 32px 24px;
     }
+
+    /* Footer */
     .footer {
-      background: #f8f9fa;
-      border-top: 1px solid #e0e0e0;
-      padding: 10px 20px;
+      background: #f8f9fb;
+      border-top: 1px solid #e8eaed;
+      padding: 12px 24px;
       text-align: center;
       font-size: 11px;
-      color: #999;
+      color: #aaa;
+      letter-spacing: 0.3px;
     }
-    noscript .link-fallback { margin-top: 12px; }
+
+    /* Hide sections by default */
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="header">Genesis Task Tracker</div>
-
-    <div id="content" class="body">
-      <noscript>
-        <p class="status">JavaScript is disabled. Click the link below to search your email:</p>
-        <p id="noscript-link" style="margin-top:12px;">
-          <!-- JS fills this; without JS the manual fallback below works -->
-        </p>
-      </noscript>
-      <div id="js-content">
-        <div class="spinner"></div>
-        <p class="status">Redirecting to your email...</p>
-        <p class="query-display" id="query-display"></p>
+    <div class="header">
+      <div class="header-icon">G</div>
+      <div>
+        <div class="header-text">Genesis Task Tracker</div>
+        <div class="header-sub">Email Reference</div>
       </div>
     </div>
 
-    <div id="fallback" style="display:none;padding:20px;text-align:center;">
-      <p class="status" style="margin-bottom:12px;">Click to open your email search:</p>
-      <a id="fallback-link" class="link-fallback" href="#" target="_blank">Open Email</a>
-      <br><br>
-      <button class="copy-btn" id="copy-btn" onclick="copyQuery()">Copy search query</button>
+    <!-- Error state -->
+    <div id="error" class="error-msg hidden">
+      No search query provided. Check the link format.
     </div>
 
-    <div id="error-content" class="error" style="display:none;"></div>
+    <!-- Main content (hidden until JS populates) -->
+    <div id="main" class="body hidden">
 
-    <div class="footer">Genesis Task Tracker &mdash; Email Redirect</div>
+      <!-- Subject always visible -->
+      <div class="subject-label">Email Subject</div>
+      <div class="subject-box" id="subject-box" title="Click to copy" onclick="copyQuery()"></div>
+
+      <!-- Mobile: copy + instructions (no auto-redirect) -->
+      <div id="mobile-section" class="hidden">
+        <button class="copy-btn" id="copy-btn" onclick="copyQuery()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <span id="copy-btn-text">Copy to clipboard</span>
+        </button>
+
+        <div class="instructions" id="instructions">
+          <div class="instructions-title" id="instructions-title">How to find this email:</div>
+          <ol id="instructions-list">
+            <!-- Populated by JS -->
+          </ol>
+        </div>
+
+        <a id="try-open-link" class="secondary-link" href="#" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span id="try-open-text">Try opening in browser</span>
+        </a>
+      </div>
+
+      <!-- Desktop: redirect spinner, then fallback -->
+      <div id="desktop-section" class="hidden">
+        <div class="redirect-section" id="redirect-spinner">
+          <div class="spinner"></div>
+          <div class="redirect-text">Redirecting to your email...</div>
+        </div>
+
+        <!-- Fallback shown after timeout -->
+        <div id="desktop-fallback" class="hidden">
+          <button class="copy-btn" id="desktop-copy-btn" onclick="copyQuery()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <span id="desktop-copy-text">Copy subject to search manually</span>
+          </button>
+
+          <div style="text-align:center;">
+            <a id="desktop-open-link" class="secondary-link" href="#" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              <span id="desktop-open-text">Open email search</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">Genesis Lda &mdash; Task Tracker</div>
   </div>
 
   <script>
@@ -144,85 +301,155 @@
       var to = (params.get('to') || '').toLowerCase();
       var q = params.get('q') || '';
 
-      // Hide JS content area by default until we know what to show
-      var jsContent = document.getElementById('js-content');
-      var fallback = document.getElementById('fallback');
-      var errorContent = document.getElementById('error-content');
+      var errorEl = document.getElementById('error');
+      var mainEl = document.getElementById('main');
 
+      // Validate query
       if (!q) {
-        jsContent.style.display = 'none';
-        errorContent.style.display = 'block';
-        errorContent.textContent = 'No search query provided. Check the link format.';
+        errorEl.classList.remove('hidden');
         return;
       }
 
-      // Build target URL
-      var url;
-      var label;
+      // Show main content
+      mainEl.classList.remove('hidden');
+
+      // Populate subject
+      document.getElementById('subject-box').textContent = q;
+
+      // Detect mobile
+      var isMobile = (function () {
+        // Check touch capability
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+          // Also check screen width to avoid false positives on touch-enabled laptops
+          if (window.innerWidth <= 768) return true;
+        }
+        // Check user agent as secondary signal
+        if (/Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          return true;
+        }
+        return false;
+      })();
+
+      // Build URLs based on provider
+      var searchUrl, openLabel, appName, appIcon;
       if (to === 'outlook') {
-        // Use deeplink/search with subject: operator for best Outlook Web match
-        url = 'https://outlook.office.com/mail/deeplink/search?query=' + encodeURIComponent('subject:"' + q + '"');
-        label = 'Abrir no Outlook';
+        searchUrl = 'https://outlook.office.com/mail/deeplink/search?query=' + encodeURIComponent('subject:"' + q + '"');
+        openLabel = 'Try opening Outlook';
+        appName = 'Outlook';
       } else {
-        // Default to Gmail — construct #search/ fragment client-side (survives proxy)
-        url = 'https://mail.google.com/mail/#search/' + encodeURIComponent(q);
-        label = 'Abrir no Gmail';
+        // Default to Gmail
+        searchUrl = 'https://mail.google.com/mail/#search/' + encodeURIComponent('subject:(' + q + ')');
+        openLabel = 'Try opening Gmail';
+        appName = 'Gmail';
       }
 
-      // Show query
-      var queryDisplay = document.getElementById('query-display');
-      queryDisplay.innerHTML = 'Search: <code></code>';
-      queryDisplay.querySelector('code').textContent = q;
-
-      // Set up fallback link
-      var fallbackLink = document.getElementById('fallback-link');
-      fallbackLink.href = url;
-      fallbackLink.textContent = label;
-
-      // Auto-redirect after 500ms
-      var timer = setTimeout(function () {
-        window.location.href = url;
-      }, 500);
-
-      // Show fallback after 2s in case redirect is blocked
-      setTimeout(function () {
-        jsContent.style.display = 'none';
-        fallback.style.display = 'block';
-      }, 2000);
-
-      // Store query for copy button
+      // Store for copy function
       window._redirectQuery = q;
+      window._appName = appName;
+
+      if (isMobile) {
+        // --- MOBILE PATH ---
+        document.getElementById('mobile-section').classList.remove('hidden');
+
+        // Set instructions based on provider
+        var listEl = document.getElementById('instructions-list');
+        if (to === 'outlook') {
+          listEl.innerHTML =
+            '<li>Open the <strong>Outlook</strong> app on your phone</li>' +
+            '<li>Tap the <strong>search</strong> icon</li>' +
+            '<li>Paste the subject text and search</li>';
+        } else {
+          listEl.innerHTML =
+            '<li>Open the <strong>Gmail</strong> app on your phone</li>' +
+            '<li>Tap the <strong>search bar</strong> at the top</li>' +
+            '<li>Paste the subject text and search</li>';
+        }
+
+        // Secondary "try opening" link
+        var tryLink = document.getElementById('try-open-link');
+        tryLink.href = searchUrl;
+        document.getElementById('try-open-text').textContent = openLabel + ' in browser';
+
+      } else {
+        // --- DESKTOP PATH ---
+        document.getElementById('desktop-section').classList.remove('hidden');
+
+        // Set up desktop links
+        var desktopLink = document.getElementById('desktop-open-link');
+        desktopLink.href = searchUrl;
+        document.getElementById('desktop-open-text').textContent = 'Open ' + appName + ' search';
+
+        // Auto-redirect after 600ms
+        var redirectTimer = setTimeout(function () {
+          window.location.href = searchUrl;
+        }, 600);
+
+        // Show fallback after 1.5s
+        setTimeout(function () {
+          document.getElementById('redirect-spinner').classList.add('hidden');
+          document.getElementById('desktop-fallback').classList.remove('hidden');
+        }, 1500);
+      }
     })();
 
     function copyQuery() {
       var q = window._redirectQuery || '';
-      var btn = document.getElementById('copy-btn');
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(q).then(function () {
-          btn.textContent = 'Copied!';
-          btn.classList.add('copied');
-          setTimeout(function () {
-            btn.textContent = 'Copy search query';
-            btn.classList.remove('copied');
-          }, 2000);
+      if (!q) return;
+
+      var allCopyBtns = [
+        { btn: document.getElementById('copy-btn'), text: document.getElementById('copy-btn-text') },
+        { btn: document.getElementById('desktop-copy-btn'), text: document.getElementById('desktop-copy-text') }
+      ];
+      var subjectBox = document.getElementById('subject-box');
+
+      function showSuccess() {
+        subjectBox.classList.add('copied-flash');
+        allCopyBtns.forEach(function (item) {
+          if (item.btn) {
+            item.btn.classList.add('copied');
+            if (item.text) item.text.textContent = 'Copied!';
+          }
         });
-      } else {
-        // Fallback for older browsers
-        var ta = document.createElement('textarea');
-        ta.value = q;
-        ta.style.position = 'fixed';
-        ta.style.left = '-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        btn.textContent = 'Copied!';
-        btn.classList.add('copied');
         setTimeout(function () {
-          btn.textContent = 'Copy search query';
-          btn.classList.remove('copied');
+          subjectBox.classList.remove('copied-flash');
+          allCopyBtns.forEach(function (item) {
+            if (item.btn) {
+              item.btn.classList.remove('copied');
+              if (item.text) {
+                item.text.textContent = item.btn.id === 'copy-btn'
+                  ? 'Copy to clipboard'
+                  : 'Copy subject to search manually';
+              }
+            }
+          });
         }, 2000);
       }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(q).then(showSuccess).catch(function () {
+          fallbackCopy(q, showSuccess);
+        });
+      } else {
+        fallbackCopy(q, showSuccess);
+      }
+    }
+
+    function fallbackCopy(text, onSuccess) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        if (onSuccess) onSuccess();
+      } catch (e) {
+        // Silent fail
+      }
+      document.body.removeChild(ta);
     }
   </script>
 </body>
