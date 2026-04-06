@@ -171,7 +171,8 @@
 
       // Show query
       var queryDisplay = document.getElementById('query-display');
-      queryDisplay.innerHTML = 'Search: <code>' + q.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</code>';
+      queryDisplay.innerHTML = 'Search: <code></code>';
+      queryDisplay.querySelector('code').textContent = q;
 
       // Set up fallback link
       var fallbackLink = document.getElementById('fallback-link');
