@@ -160,12 +160,13 @@
       var url;
       var label;
       if (to === 'outlook') {
-        url = 'https://outlook.office.com/mail/search?query=' + encodeURIComponent(q);
-        label = 'Open in Outlook';
+        // Use deeplink/search with subject: operator for best Outlook Web match
+        url = 'https://outlook.office.com/mail/deeplink/search?query=' + encodeURIComponent('subject:"' + q + '"');
+        label = 'Abrir no Outlook';
       } else {
-        // Default to Gmail
+        // Default to Gmail — construct #search/ fragment client-side (survives proxy)
         url = 'https://mail.google.com/mail/#search/' + encodeURIComponent(q);
-        label = 'Open in Gmail';
+        label = 'Abrir no Gmail';
       }
 
       // Show query
